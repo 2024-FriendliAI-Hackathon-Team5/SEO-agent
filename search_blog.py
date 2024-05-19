@@ -1,6 +1,8 @@
 import os
 import urllib.request
 import json
+from bs4 import BeautifulSoup
+import re
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -16,9 +18,9 @@ def search_blog(keywords: list[str], length: int = 20, sort='sim'):
         length (int): 검색 결과 개수 (max = 100)
         sort (str): 정렬 기준  (sim: 정확도순으로 내림차순 정렬 / date: 날짜순으로 내림차순 정렬)
     """
-    keyword_query = " ".join([f"+{keyword}" for keyword in keywords])
+    keyword_query = " ".join([f"+{keyword}" for keyword in keywords]) # 해당 키워드들을 모두 포함하는 검색 결과
     encText = urllib.parse.quote(keyword_query)
-    url = "https://openapi.naver.com/v1/search/blog?query=" + encText + "&display=" + str(length) + "&sort=" + sort
+    url = "https://openapi.naver.com/v1/search/blog?query=" + encText + "&display=" + str(length) + "&sort=" + sort 
     request = urllib.request.Request(url)
     request.add_header("X-Naver-Client-Id", client_id)
     request.add_header("X-Naver-Client-Secret", client_secret)
@@ -37,3 +39,15 @@ def search_blog(keywords: list[str], length: int = 20, sort='sim'):
         print("Error Code:" + rescode)
         return None
     
+def crawl_blog(url: str):
+    m_url = "https://m." + url.replace("https://","")
+    response = urllib.request.urlopen(m_url)
+    soup = BeautifulSoup(response, 'html.parser')
+    p_tags = soup.find_all('p', class_=re.compile('se-text-paragraph'))
+
+    result=""
+    for p_tag in p_tags:
+        text = p_tag.get_text(strip=True)
+        if text:  
+            result += text
+    return result
