@@ -9,7 +9,7 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from dotenv import load_dotenv
 import os
-from search_blog import search_blog, crawl_blog
+from blog_api import search_blog, crawl_blog
 
 # 사용자 입력 받기
 title_input = "파이썬을 활용한 데이터 분석 - 초보자를 위한 가이드"
