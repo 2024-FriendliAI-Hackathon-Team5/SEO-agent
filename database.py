@@ -5,7 +5,7 @@ from langchain_openai import OpenAIEmbeddings
 import os
 from dotenv import load_dotenv
 from blog_api import search_blog, crawl_blog
-from examples import keywords
+from example import keywords
 
 embeddings = OpenAIEmbeddings(api_key=os.getenv("OPENAI_API_KEY"))
 vdb = Chroma(persist_directory=".", embedding_function=embeddings)
