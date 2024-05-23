@@ -2,8 +2,10 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 from langchain_chroma import Chroma
 from langchain_openai import OpenAIEmbeddings
+import os
 from dotenv import load_dotenv
 from blog_api import search_blog, crawl_blog
+from examples import keywords
 
 embeddings = OpenAIEmbeddings(api_key=os.getenv("OPENAI_API_KEY"))
 vdb = Chroma(persist_directory=".", embedding_function=embeddings)
@@ -26,6 +28,7 @@ def update_vdb(keywords):
     split_docs = text_splitter.split_documents(docs)
 
     vdb.add_documents(split_docs)
-    vdb.persist()
 
     return vdb
+
+#update_vdb(keywords) #test update_vdb() function

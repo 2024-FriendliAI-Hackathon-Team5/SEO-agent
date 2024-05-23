@@ -7,6 +7,7 @@ from prompt import rag_prompt
 from database import vdb
 from dotenv import load_dotenv
 import os
+from examples import title_input, content_input
 
 load_dotenv()
 
@@ -36,3 +37,5 @@ def run_rag_chain(title_input, content_input):
 
     result = rag_chain.invoke(title_input + content_input)
     return result
+
+#print(run_rag_chain(title_input, content_input)) # test run_rag_chain() function
