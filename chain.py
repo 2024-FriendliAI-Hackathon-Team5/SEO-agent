@@ -7,7 +7,7 @@ from prompt import rag_prompt
 from database import vdb
 from dotenv import load_dotenv
 import os
-from examples import title_input, content_input
+from example import title_input, content_input
 
 load_dotenv()
 
