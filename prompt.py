@@ -9,4 +9,4 @@ rag_prompt = """
 
     Modified blog post: 
 
-    """ 
+    """
