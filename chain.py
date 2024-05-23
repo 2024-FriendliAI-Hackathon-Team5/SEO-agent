@@ -3,7 +3,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_community.chat_models.friendli import ChatFriendli
 from langchain_core.runnables import RunnablePassthrough
-from prompt import rag_prompt
+from prompt import rag_prompt, feedback_prompt
 from database import vdb
 from dotenv import load_dotenv
 import os
@@ -38,4 +38,17 @@ def run_rag_chain(title_input, content_input):
     result = rag_chain.invoke(title_input + content_input)
     return result
 
+def run_feedback_chain(response, feedback):
+    prompt = PromptTemplate.from_template(feedback_prompt)
+    formatted_prompt = prompt.format(feedback=feedback, response=response)
+
+    feedback_chain = (
+        llm
+        | StrOutputParser()
+    )
+
+    result = feedback_chain.invoke(formatted_prompt)
+    return result
+
 #print(run_rag_chain(title_input, content_input)) # test run_rag_chain() function
+#print(run_feedback_chain(title_input, content_input)) # test run_rag_chain() function

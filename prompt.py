@@ -10,3 +10,9 @@ rag_prompt = """
     Modified blog post: 
 
     """
+
+feedback_prompt = """
+    Previous Response: {response}
+    Feedback: {feedback}
+    Modified Response:
+    """
